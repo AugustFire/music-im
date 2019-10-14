@@ -4,8 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
+ * boot for application
+ * date 2019-10-14
+ *
  * @author yzx
- * @date 2019/8/20
  */
 @SpringBootApplication
 public class MusicImApplication {
