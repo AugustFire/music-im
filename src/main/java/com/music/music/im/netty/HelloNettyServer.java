@@ -3,11 +3,15 @@ package com.music.music.im.netty;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -28,6 +32,9 @@ public class HelloNettyServer {
         b.group(bossGroup, workGroup)
                 //指定channel为NioServerSocketChannel对应于nio.ServerSocketChannel
                 .channel(NioServerSocketChannel.class)
+                .handler(new LoggingHandler(LogLevel.INFO))
+                .option(ChannelOption.SO_BACKLOG, 128)
+                .attr(AttributeKey.valueOf("ssc.key"), "ssc.value")
                 //初始化客户端连接
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
@@ -44,13 +51,13 @@ public class HelloNettyServer {
         try {
             //开启监听端口,介接受客户端请求
             ChannelFuture f = b.bind(port).sync();
-            log.info("TimeServer start on [{}]",port);
+            log.info("TimeServer start on [{}]", port);
             f.channel().closeFuture().sync();
             log.info("debug001");
 
         } catch (InterruptedException e) {
             log.info("TimeServer error [{}]", e.getMessage());
-        }finally {
+        } finally {
             workGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
