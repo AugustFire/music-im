@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
-    private byte[] req = ("QUERY1 TIME ORDER" + System.getProperty("line.separator")).getBytes();
+    private byte[] req = ("QUERY TIME ORDER" + System.getProperty("line.separator")).getBytes();
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {

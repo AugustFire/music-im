@@ -50,18 +50,25 @@ public class SelectorServer {
                     //注册到Selector,监听OP_READ事件,等待数据
                     socketChannel.register(selector, SelectionKey.OP_READ);
                 } else if (key.isReadable()) {
-                    log.info("监听到_新的数据");
-                    //有数据可读
-                    SocketChannel socketChannel = (SocketChannel) key.channel();
-                    ByteBuffer readBuffer = ByteBuffer.allocate(1024);
-                    int num = socketChannel.read(readBuffer);
-                    if (num > 0) {
-                        System.out.println("收到的数据:" + new String(readBuffer.array()).trim());
-                        ByteBuffer buffer = ByteBuffer.wrap("OOPS...".getBytes());
-                        socketChannel.write(buffer);
-                    }
-                    if (num == -1) {
+
+                        log.info("监听到_新的数据");
+                        //有数据可读
+                        SocketChannel socketChannel = (SocketChannel) key.channel();
+                        ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+                    try {
+                        int num = socketChannel.read(readBuffer);
+                        if (num > 0) {
+                            System.out.println("收到的数据:" + new String(readBuffer.array()).trim());
+                            ByteBuffer buffer = ByteBuffer.wrap("OOPS...".getBytes());
+                            socketChannel.write(buffer);
+                        }
+                        if (num == -1) {
+                            socketChannel.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                         socketChannel.close();
+                        key.cancel();
                     }
                 }
                 iterator.remove();
