@@ -1,7 +1,6 @@
 package com.music.music.im;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.concurrent.*;
 
 /**
  * boot for application
@@ -9,11 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author yzx
  */
-@SpringBootApplication
+// @SpringBootApplication
 public class MusicImApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(MusicImApplication.class, args);
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+
     }
 
-}
+
+
+
+    }

@@ -24,7 +24,7 @@ public class HelloNettyServer {
     public static void main(String[] args) {
         final int port = 8080;
         //接受客户端连接
-        NioEventLoopGroup bossGroup = new NioEventLoopGroup();
+        NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         //处理客户端连接
         NioEventLoopGroup workGroup = new NioEventLoopGroup();
         //服务启动类
